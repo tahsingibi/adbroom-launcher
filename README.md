@@ -12,7 +12,7 @@ Android TV / Google TV için hızlı, native ve reklamsız ana ekran. **Mac uygu
 
 ```sh
 adb connect <TV-IP>:5555
-adb -s <TV-IP>:5555 install -r ADBroomLauncher-1.2.1.apk
+adb -s <TV-IP>:5555 install -r ADBroomLauncher-1.0.0.apk
 adb -s <TV-IP>:5555 shell am start -n io.github.adbroom.launcher/.HomeActivity
 ```
 
@@ -34,7 +34,7 @@ JDK 17+, Python 3 ve Android SDK platform/build-tools 35+ gerekir. Gerekirse `JA
 ./build.sh
 ```
 
-Çıktılar: `build/ADBroomLauncher.apk`, `dist/ADBroomLauncher-1.2.1.apk` ve `.apk.sha256`.
+Çıktılar: `build/ADBroomLauncher.apk`, `dist/ADBroomLauncher-1.0.0.apk` ve `.apk.sha256`.
 
 Güncellemeler için mevcut `.signing/development.jks` kimliğini koru. Yayın kimliği `LAUNCHER_KEYSTORE`, `LAUNCHER_KEY_ALIAS`, `LAUNCHER_STORE_PASSWORD` değişkenleriyle seçilebilir. Anahtar Git'e eklenmez.
 

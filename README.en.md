@@ -13,7 +13,7 @@ Independent native Android TV home screen, Android 6.0/API 23+. **The Mac app is
 
    ```sh
    adb connect <TV-IP>:5555
-   adb -s <TV-IP>:5555 install -r ADBroomLauncher-1.2.1.apk
+   adb -s <TV-IP>:5555 install -r ADBroomLauncher-1.0.0.apk
    adb -s <TV-IP>:5555 shell am start -n io.github.adbroom.launcher/.HomeActivity
    ```
 
