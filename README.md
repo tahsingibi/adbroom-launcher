@@ -1,78 +1,46 @@
-<p align="center"><img src="assets/branding/adbroom-icon.png" width="112" alt="ADBroom Launcher"></p>
+<p align="center"><img src="assets/icon.png" width="112" alt="ADBroom Launcher"></p>
 
-# ADBroom Launcher for Android TV
+# ADBroom Launcher
 
-Independent native Android TV home screen, Android 6.0/API 23+. **The Mac app is not required.** Java + platform views; no WebView, third-party runtime, INTERNET permission, ads or analytics.
+Android TV / Google TV için hızlı, native ve reklamsız ana ekran. **Mac uygulaması gerekmez.** Android 6.0+; Java ve Android'in kendi arayüz bileşenleriyle çalışır. INTERNET izni, WebView ve analitik içermez.
 
-## Download and install without the Mac app
+**Türkçe** · [English](README.en.md) · [Son sürümü indir (APK)](https://github.com/tahsingibi/adbroom-launcher/releases/latest) · [Mac uygulaması](https://github.com/tahsingibi/adbroom)
 
-1. Open [Launcher releases](https://github.com/tahsingibi/adbroom-launcher/releases) on GitHub and download `ADBroomLauncher-<version>.apk` from Assets. The `.sha256` asset is the checksum.
-2. Transfer the APK to the TV and open it with its APK installer, allowing installation from the source you chose when Android asks. Alternatively, use ADB from macOS, Windows or Linux:
+## Kurulum ve kullanım
 
-   ```sh
-   adb connect <TV-IP>:5555
-   adb -s <TV-IP>:5555 install -r ADBroomLauncher-1.2.1.apk
-   adb -s <TV-IP>:5555 shell am start -n io.github.adbroom.launcher/.HomeActivity
-   ```
+[Son sürümdeki](https://github.com/tahsingibi/adbroom-launcher/releases/latest) `ADBroomLauncher-<sürüm>.apk` dosyasını TV'ye aktararak kur. Aynı yayındaki `.apk.sha256` dosyası sağlama toplamıdır. ADB ile de kurabilirsin:
 
-3. Open Launcher settings → Home screen → Default home app to select ADBroom. The original home app stays installed. Some TVs restrict the default picker; optional Home routing is explained in launcher settings and must be enabled manually in Android Accessibility settings.
-
-The launcher works on its own after installation. App ordering, favorites, collections, appearance and parental controls are managed with the TV remote. Using the optional Mac companion provides remote control, installation and an additional editor.
-
-In the Mac companion, **Launcher** edits order and per-app preferences, **Settings** edits the profile, and **Backup** imports/exports JSON. Choose **Save to TV** to apply local changes. The TV stores the order and profile; the Mac app is not needed afterward. **General → About → Download launcher APK** also downloads the standalone installer without a TV connection.
-
-## Controls and settings
-
-OK opens an app; hold OK for move, favorite, rename, collection, hide/show, PIN lock and app info. Menu enters rearranging; arrows move, OK saves and Back cancels. Hidden apps remain available from Settings → Applications. Collections are flat filters alongside All.
-
-Settings include grid/horizontal row, 4–8 columns, icon/banner cards, themes, colors, photo wallpaper, labels, 12/24-hour clock, date, profile name and English/Türkçe/system language. Modules cover favorites, connection status, Live TV/HDMI and optional media. HDMI behavior depends on the TV's input service.
-
-Media requires user-enabled notification access; notification text is never stored. Only the most recent media title/source are retained locally and can be cleared in Settings. The optional accessibility service routes Home and recognizes other home activities, with window-content retrieval disabled. Neither service is enabled automatically. Android sideload restrictions can limit availability.
-
-PIN uses a native remote keypad, salted PBKDF2 and a delay after repeated failures. It protects launcher entry points, not Android globally. PIN material and wallpaper files are excluded from the Mac JSON backup. User preferences remain on the TV across updates signed with the same key.
-
-## Repository layout
-
-```text
-src/                Native Java launcher and local ADB bridge
-res/                Android resources and density-specific icons
-tests/              Unit, emulator and focus regression tests
-assets/branding/    Artwork source and transparent master
-scripts/            Icon preparation and release helper
-docs/               Feature notes and publishing guide
-AndroidManifest.xml Version and Android components
-build.sh            Standalone APK build
-build/              Local APK and test artifacts (ignored)
-dist/               Versioned APK + SHA-256 (ignored)
+```sh
+adb connect <TV-IP>:5555
+adb -s <TV-IP>:5555 install -r ADBroomLauncher-1.2.1.apk
+adb -s <TV-IP>:5555 shell am start -n io.github.adbroom.launcher/.HomeActivity
 ```
 
-The Mac app lives separately at [tahsingibi/adbroom](https://github.com/tahsingibi/adbroom). This repository builds without any files from that checkout.
+Launcher ayarlarından varsayılan ana ekranı seç. OK uygulamayı açar, uzun OK uygulama seçeneklerini açar. Menü ile sıralamaya gir, yön tuşlarıyla taşı, OK ile kaydet, Geri ile iptal et.
 
-## Build independently
+Izgara/yatay sıra, favoriler, özel adlar, koleksiyonlar, gizleme, duvar kâğıdı, saat, modüller ve ebeveyn PIN'i TV kumandasından yönetilir. İsteğe bağlı Mac editörü aynı ayarları ve sıralamayı düzenler; tercihler TV'de saklanır. Home yönlendirmesi ve medya erişimi kullanıcı tarafından TV sistem ayarlarından açılır; destek TV'ye göre değişir.
 
-Requires JDK 17+, Python 3 and Android SDK platform/build-tools 35+. Set `JAVA_HOME` and `ANDROID_SDK_ROOT` if needed. macOS defaults to `~/Library/Android/sdk`; on other systems set the SDK path explicitly. No Mac compiler, Swift or companion app is needed.
+## Klasörler ve derleme
+
+- `src/`, `res/`: launcher kaynakları ve Android görselleri.
+- `tests/`: birim, emülatör ve odak regresyon testleri.
+- `assets/icon.png`: ikonların üretildiği şeffaf ana görsel (`scripts/prepare-icons.sh`).
+- `scripts/`, `docs/`: görsel/yayın yardımcıları ve teknik notlar.
+- `build/`, `dist/`: yerel çıktılar; Git'e eklenmez.
+
+JDK 17+, Python 3 ve Android SDK platform/build-tools 35+ gerekir. Gerekirse `JAVA_HOME` ve `ANDROID_SDK_ROOT` ayarla. Swift veya Mac reposuna ihtiyaç yoktur:
 
 ```sh
 ./build.sh
 ```
 
-Outputs:
+Çıktılar: `build/ADBroomLauncher.apk`, `dist/ADBroomLauncher-1.2.1.apk` ve `.apk.sha256`.
 
-```text
-dist/ADBroomLauncher-<version>.apk
-dist/ADBroomLauncher-<version>.apk.sha256
-build/ADBroomLauncher.apk   # unversioned development/test copy
-```
+Güncellemeler için mevcut `.signing/development.jks` kimliğini koru. Yayın kimliği `LAUNCHER_KEYSTORE`, `LAUNCHER_KEY_ALIAS`, `LAUNCHER_STORE_PASSWORD` değişkenleriyle seçilebilir. Anahtar Git'e eklenmez.
 
-Version and versionCode come from `AndroidManifest.xml`. `ANDROID_BUILD_TOOLS`/`ANDROID_PLATFORM` can select SDK directories. A local signing identity is kept in ignored `.signing/development.jks`; the reorganization preserves the existing key. Keep it for updates. Distribution can use `LAUNCHER_KEYSTORE`, `LAUNCHER_KEY_ALIAS` and `LAUNCHER_STORE_PASSWORD`; different build machines must share the release identity. The build verifies the signed APK before replacing the output.
+## Testler ve yayın
 
-## Icon and TV banner
-
-The launcher uses the same rounded Android TV / magic wand artwork as the Mac companion. Density-specific transparent icons live in `res/drawable-*`; `res/drawable/banner.xml` centers the icon on a TV banner without stretching or clipping its corners. The manifest and fallback app-card drawable reference these resources. See the [shared artwork and source](assets/branding/README.md).
-
-## Tests
-
-The build runs `tests/OrderLogicTest.java`. With a disposable emulator on port 5580:
+Derleme sıralama birim testini çalıştırır. Yalnızca geçici emülatörde:
 
 ```sh
 python3 tests/smoke.py --adb "$ANDROID_SDK_ROOT/platform-tools/adb"
@@ -80,12 +48,8 @@ python3 tests/features.py --adb "$ANDROID_SDK_ROOT/platform-tools/adb"
 bash tests/focus.sh emulator-5580
 ```
 
-These tests change only the specified disposable emulator's home/profile. They cover persistence, conflicts, D-pad ordering, configuration, hidden-app recovery and PIN flows. Physical HDMI inputs and OEM Home routing require testing on the actual TV.
-
-The focus regression builds a separate instrumentation APK with the same signing key and inspects each drawn frame during grid/row navigation, scrolling, toolbar focus changes and reordering. It checks that the selected card is the only highlighted card. Test code is never included in the production launcher APK.
-
-[Launcher changelog](CHANGELOG.md) · [Mac companion](https://github.com/tahsingibi/adbroom) · [Release guide](docs/RELEASING.md) · [License](LICENSE)
+[Yayın rehberi](docs/RELEASING.md) · [Sürüm notları](CHANGELOG.md) · [MIT](LICENSE)
 
 Tahsin Sungur · [X/tahsingibi](https://x.com/tahsingibi) · [sungur.dev](https://sungur.dev)
 
-The Android robot is reproduced or modified from work shared by Google under the [Creative Commons 3.0 Attribution License](https://creativecommons.org/licenses/by/3.0/).
+Android robotu, Google tarafından paylaşılan çalışmadan [Creative Commons 3.0 Atıf Lisansı](https://creativecommons.org/licenses/by/3.0/) koşullarıyla kullanılır.

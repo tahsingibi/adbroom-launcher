@@ -3,7 +3,7 @@
 # resulting committed PNGs and do not need this script or an image service.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-MASTER="assets/branding/adbroom-icon.png"
+MASTER="assets/icon.png"
 [[ -f "$MASTER" ]] || { echo "Missing branding master: $MASTER" >&2; exit 1; }
 command -v sips >/dev/null || { echo 'Run asset preparation on macOS (sips required).' >&2; exit 1; }
 for spec in mdpi:96 hdpi:144 xhdpi:192 xxhdpi:288 xxxhdpi:384; do
